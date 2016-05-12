@@ -25,7 +25,8 @@ function getReadStream(file) {
 function chainReplacers(replaceMap) {
   function pipeReplacer(stream, oldValue) {
     var newValue = replaceMap[oldValue];
-    return stream.pipe(replace(oldValue, newValue));
+    var boundValue = new RegExp('\\b' + oldValue + '\\b');
+    return stream.pipe(replace(boundValue, newValue));
   }
 
   return function(inputStream) {
